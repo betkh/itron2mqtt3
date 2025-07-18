@@ -465,3 +465,21 @@ If you're still experiencing issues:
      docker-compose logs --tail=50 xcel_itron2mqtt 2>/dev/null || echo "No logs available"
    } > debug_report.txt
    ``` 
+
+
+
+## 📞 Support Commands
+
+```bash
+# Get system info
+docker info
+
+# Check network connectivity
+ping YOUR_METER_IP
+
+# Validate docker-compose config
+docker-compose config
+
+# Check available images
+docker images | grep xcel
+```
