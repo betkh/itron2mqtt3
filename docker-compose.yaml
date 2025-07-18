@@ -1,0 +1,45 @@
+services:
+  mqtt:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+    command: mosquitto -c /mosquitto/config/mosquitto.conf
+
+  xcel_itron2mqtt:
+    container_name: xcel_itron2mqtt
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mqtt
+    volumes:
+      - ./certs:/opt/xcel_itron2mqtt/certs:ro
+    environment:
+      # MQTT Configuration
+      MQTT_SERVER: mqtt
+      MQTT_PORT: 1883
+      MQTT_TOPIC_PREFIX: homeassistant/
+      MQTT_USER: 
+      MQTT_PASSWORD: 
+      
+      # Meter Configuration
+      METER_IP: 10.28.10.181
+      METER_PORT: 8081
+      
+      # Certificate Configuration
+      CERT_PATH: /opt/xcel_itron2mqtt/certs/.cert.pem
+      KEY_PATH: /opt/xcel_itron2mqtt/certs/.key.pem
+      
+      # Logging
+      LOGLEVEL: debug
+    restart: unless-stopped
+    network_mode: host
+
+volumes:
+  mosquitto_data:
+  mosquitto_log:
