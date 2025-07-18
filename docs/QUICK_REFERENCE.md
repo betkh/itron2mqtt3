@@ -4,7 +4,7 @@
 
 ```bash
 # 1. Setup (generate certs and create .env)
-./setup.sh
+./scripts/setup.sh
 
 # 2. Edit .env to add your meter IP
 nano .env
