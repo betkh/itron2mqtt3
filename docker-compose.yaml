@@ -1,6 +1,7 @@
 services:
   mqtt:
     image: eclipse-mosquitto:latest
+    hostname: eclispe-mosquitto-host
     container_name: mosquitto
     ports:
       - "1883:1883"
@@ -12,6 +13,7 @@ services:
 
   xcel_itron2mqtt:
     container_name: xcel_itron2mqtt
+    hostname: xcel_itron2mqtt-host
     build:
       context: .
       dockerfile: Dockerfile
@@ -21,22 +23,23 @@ services:
       - ./certs:/opt/xcel_itron2mqtt/certs:ro
     environment:
       # MQTT Configuration:
-      MQTT_SERVER: mqtt
-      MQTT_PORT: 1883
+      MQTT_SERVER: "${MQTT_SERVER}"
+      MQTT_PORT: "${MQTT_PORT}"
       MQTT_TOPIC_PREFIX: homeassistant/
       MQTT_USER: 
       MQTT_PASSWORD: 
       
       # Meter Configuration
-      METER_IP: 10.28.10.181
-      METER_PORT: 8081
+      METER_IP: "${METER_IP}"
+      METER_PORT: "${METER_PORT}"
       
       # Certificate Configuration
-      CERT_PATH: /opt/xcel_itron2mqtt/certs/.cert.pem
-      KEY_PATH: /opt/xcel_itron2mqtt/certs/.key.pem
+      CERT_PATH: "${CERT_PATH}"
+      CERT_KEY_PATH: "${CERT_KEY_PATH}"
+    
       
       # Logging
-      LOGLEVEL: debug
+      LOGLEVEL: "${LOGLEVEL}"
     restart: unless-stopped
     network_mode: host
 
