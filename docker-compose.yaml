@@ -20,7 +20,7 @@ services:
     volumes:
       - ./certs:/opt/xcel_itron2mqtt/certs:ro
     environment:
-      # MQTT Configuration
+      # MQTT Configuration:
       MQTT_SERVER: mqtt
       MQTT_PORT: 1883
       MQTT_TOPIC_PREFIX: homeassistant/
