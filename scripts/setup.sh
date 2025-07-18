@@ -19,4 +19,10 @@ fi
 echo ""
 echo "Please edit the .env file and enter the required fields (e.g., METER_IP, MQTT credentials, etc.)."
 echo ""
+
+# Call generate_keys.sh to generate TLS keys
+echo "Generating TLS keys for meter registration..."
+bash scripts/generate_keys.sh
+
+echo ""
 echo "Setup complete!"
